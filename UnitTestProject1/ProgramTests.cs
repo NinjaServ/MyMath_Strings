@@ -11,20 +11,16 @@ namespace MyMath.Tests
     [TestClass()]
     public class ProgramTests
     {
-        private TestContext context;
-        public TestContext TestContext
-        {
-            get { return context; }
-            set { context = value; }
-        }
+        private DataLayer.Database.Database db = new DataLayer.Database.Database();
+        public TestContext TestContext { get; private set; }
 
         [TestMethod()]
         //[DeploymentItem("UnitTestProject1\\TestDataSource.mdb")] //  MyMath_Strings UnitTestProject1\\ UnitTestProject1\\testdatasource.mdb
         [DataSource("MyJetDataSource")]
         public void MyTestMethod()
         {
-            int a = Int32.Parse(context.DataRow["Arg1"].ToString());
-            int b = Int32.Parse(context.DataRow["Arg2"].ToString());
+            int a = Int32.Parse(TestContext.DataRow["Arg1"].ToString());
+            int b = Int32.Parse(TestContext.DataRow["Arg2"].ToString());
             Assert.AreNotEqual(a, b, "A value was equal.");
         }
 
@@ -33,7 +29,12 @@ namespace MyMath.Tests
         [DataSource("MyExcelDataSource")]
         public void MyTestMethod2()
         {
-            Assert.AreEqual(context.DataRow["Val1"], context.DataRow["Val2"]);
+            db.Contacts.Count();
+            db.Contacts.Add(new DataLayer.Database.Contact());
+            db.SaveChanges();
+
+
+           // Assert.AreEqual(TestContext.DataRow["Val1"], context.DataRow["Val2"]);
         }
 
 
